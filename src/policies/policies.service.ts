@@ -7,6 +7,7 @@ import { PolicySaveDto } from './dto/policy.save-dto.js';
 import { PolicyDto } from './dto/policy.dto.js';
 import { Policy } from './policy.entity.js';
 import { Car } from '../cars/car.entity.js';
+import { EntityNotFoundException } from '../exceptions/entity-not-found.exception.js';
 
 @Injectable()
 export class PoliciesService {
@@ -30,6 +31,9 @@ export class PoliciesService {
 
   async getAllActivePolicies(): Promise<PolicyDto[]> {
     const policies: Policy[] = await this.repository.findAllActive();
+    if (policies.length === 0) {
+      throw new EntityNotFoundException('Policy');
+    }
     return this.mapper.mapEntityListToDtoList(policies);
   }
 
@@ -42,7 +46,7 @@ export class PoliciesService {
     const policy: Policy | null = await this.repository.findById(id);
 
     if (!policy || !policy.active) {
-      throw Error();
+      throw new EntityNotFoundException('Policy', id);;
     }
 
     return policy;
