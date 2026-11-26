@@ -4,6 +4,7 @@ import { CarsModule } from './cars/cars.module.js';
 import { PoliciesModule } from './policies/policies.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AiModule } from './ai/ai.module.js';
+import { EmbeddingsModule } from './embeddings/embeddings.module.js';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AiModule } from './ai/ai.module.js';
     CarsModule,
     PoliciesModule,
     AiModule,
+    EmbeddingsModule,
   ],
 })
 export class AppModule {}
